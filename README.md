@@ -2,7 +2,7 @@
 Pytorch implementation of paper "ScaMo: Exploring the Scaling Law in Autoregressive Motion Generation Model"
 
 
-[[Project Page]]() [[Paper]]()
+[[Project Page]]() [[Paper]](https://github.com/shunlinlu/ScaMo/blob/main/assets/Arxiv_ScaMo.pdf)
 
 
 <p align="center">
