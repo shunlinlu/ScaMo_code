@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MoMask: Generative Masked Modeling of 3D Human Motions</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">MoMask: Generative Masked Modeling of 3D Human Motions</h1>
+          <div class="is-size-3 publication-authors">
+            CVPR 2024
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ericguo5513.github.io/">Chuan Guo</a><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="https://yxmu.foo/">Yuxuan Mu</a><sup>*</sup>,</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=w4e-j9sAAAAJ&hl=en">Muhammad Gohar Javed</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://sites.google.com/site/senwang1312home/">Sen Wang</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.ece.ualberta.ca/~lcheng5/">Li Cheng</a>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">University of Alberta, Canada</span>
+            <!-- <span class="author-block"><sup>2</sup>Google Research</span> -->
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2312.00063"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/EricGuo5513/momask-codes"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/spaces/MeYourHint/MoMask" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <i class="fas fa-rocket"></i>
+                </span>
+                <span>Demo</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    
+        <!-- <center><h2 class="title is-3">Abstract</h2></center> -->
+    <div class="hero-body has-text-centered">
+        <img src = "./static/images/teaser.png" height="80%"></img><br>
+
+    </div>
+
+    <p>
+      We introduce MoMask, a novel masked modeling framework for text-driven 3D human motion generation. In MoMask, a hierarchical quantization scheme is employed to represent human motion as multi-layer discrete motion tokens with high-fidelity details. Starting at the base layer, with a sequence of motion tokens obtained by vector quantization, the residual tokens of increasing orders are derived and stored at the subsequent layers of the hierarchy. This is consequently followed by two distinct bidirectional transformers. For the base-layer motion tokens, a Masked Transformer is designated to predict randomly masked motion tokens conditioned on text input at training stage. During generation (i.e. inference) stage, starting from an empty sequence, our Masked Transformer iteratively fills up the missing tokens; Subsequently, a Residual Transformer learns to progressively predict the next-layer tokens based on the results from current layer. Extensive experiments demonstrate that MoMask outperforms the state-of-art methods on the text-to-motion generation task, with an FID of 0.045 (vs e.g. 0.141 of T2M-GPT) on the HumanML3D dataset, and 0.228 (vs 0.514) on KIT-ML, respectively. MoMask can also be seamlessly applied in related tasks without further model fine-tuning, such as text-guided temporal inpainting. 
+    </p>
+    <br>
+    <!-- <div class="content has-text-centered">
+      <video id="replay-video"
+            autoplay 
+             controls
+             playsinline
+             width="80%">
+        <source src="./static/video/demo.mp4"
+                type="video/mp4">
+      </video>
+    </div> -->
+    <div id="video-container">
+      <video id="video" muted controls playsinline>
+        <source src="./static/video/demo.mp4" type="video/mp4">
+      </video>
+      <span style="font-size:12px">* This video contains audio.</span>
+    </div>
+    
+  </div>
+</section>
+
+
+
+<section class="section is-light is-small">
+  <div class="container is-max-desktop">
+    <center><h2 class="title is-3">Approach Overview</h2></center>
+    <div class="hero-body">
+      <a href="./static/images/model.png"><img src = "./static/images/model.png" height="100%"></img></href></a><br>
+    </div>
+  </div>
+    <!--/ Abstract. -->
+
+</section>
+
+
+<section class="hero is-small is-light">
+  <center><h2 class="title is-3">Gallery of Generation</h2></center>
+  <div class="hero-body">
+
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="column is-centered has-text-centered">
+          <p><b> "A character is running on a treadmill."</b></p><br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/3.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "The person holds its left foot with its left hand, puts its right foot up and left hand up too."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/6.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person stands for a few seconds and picks up its arms and shakes them."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "This person kicks with their right leg then jabs several times."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/0.mp4" type="video/mp4">
+          </video>
+        </div>
+        <!-- <div class="column is-centered has-text-centered">
+          <p><b> A person walks with a limp, their left leg gets injured.</b></p>
+          <br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/4.mp4" type="video/mp4">
+          </video>
+        </div> -->
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person walks in a clockwise circle and stops where he began."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/7.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A man bends down and picks something up with his right hand."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/8.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "The man walked forward, spun right on one foot and walked back to his original position."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/9.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person stands, crosses left leg in front of the right, lowering themselves until they are sitting, both hands on the floor before standing and uncrossing legs."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/2.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A man is walking forward then steps over an object, then continues walking forward."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/10.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person repeatedly blocks their face with their right arm."</b></p>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/5.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "This person takes 4 steps forward starting with their right foot."</b></p>
+          <!-- <br> -->
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/11.mp4" type="video/mp4">
+          </video>
+        </div><div class="column is-centered has-text-centered">
+          <p><b> "The person takes 4 steps backwards."</b></p>
+          <br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/14.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "The person did a kick spin to the left."</b></p>
+          <br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/12.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A figure stretches its hands and arms above its head."</b></p>
+          <br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/gallery/13.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "The person does a salsa dance."</b></p><br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/diversity/salsa0.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person jumps up and then lands."</b></p><br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/diversity/jump_up1.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="column is-centered has-text-centered">
+          <p><b> "A person was pushed but did not fall."</b></p><br>
+          <video poster="" id="tree" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/video/diversity/push_fall0.mp4" type="video/mp4">
+          </video>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <center><h2 class="title is-3">Application: Temporal Inpainting</h2></center><br>
+    <p>
+      We showcase MoMask's capability to inpaint specific regions within existing motion clips, conditioned on a textual description. Here, we present the inpainting results for the middle, suffix, and prefix regions of motion clips. The input motion clips are highlighted in <span style="color:purple;">purple</span>, and the synthesized content is represented in <span style="color:#76D7C4;">cyan</span>.
+    </p>
+    <br>
+    <h3 class="title is-4">Inbetweening</h2>
+    (<span style="color:purple;">Purple</span>=Input, <span style="color:#76D7C4;">Cyan</span>=Synthesis)
+    <br>
+    <div class="columns is-centered">
+      <div class="column">
+        <div id="video-container">
+          <center><p><b> + "A person falls down and gets back up quickly."</b></p></center>
+          <video id="video" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/inbetweening/fall.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <center><p><b> + "A person is pushed."</b></p></center>
+          <video poster="" id="push" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/inbetweening/push.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-4">Prefix</h2>
+    (<span style="color:purple;">Purple</span>=Input, <span style="color:#76D7C4;">Cyan</span>=Synthesis)
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <center><p><b> + "A person gets up from the ground."</b></p></center>
+          <video poster="" id="standing" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/prefix/standing.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <center><p><b> + "A person is doing warm up"</b></p></center>
+          <video poster="" id="warmup" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/prefix/warmup.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="title is-4">Suffix</h2>
+    (<span style="color:purple;">Purple</span>=Input, <span style="color:#76D7C4;">Cyan</span>=Synthesis)
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content">
+          <center><p><b> + "A person bows"</b></p></center>
+          <video poster="" id="bow" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/suffix/bow.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content">
+          <center><p><b> + "A person squats"</b></p></center>
+          <video poster="" id="squat" controls muted loop playsinline height="40%">
+              <source src="./static/video/editting/suffix/squat.mp4#t=0.01"
+                      type="video/mp4">
+            </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <center><h2 class="title is-3">Impact of Residual Quantization</h2></center>
+
+        <!-- Interpolating. -->
+        <h3 class="title is-4">Reconstruction</h3>
+        <div class="content has-text-justified">
+          <p>
+            We investigate the impact of varying the number of residual quantization layers on reconstruction results. In the visual comparison, we present the ground truth motion alongside motions recovered from <b>different</b> RVQ-VAEs with 5 residual layers, 3 residual layers, and no residual layers (traditional VQ-VAE), respectively. The result demonstrates that RVQ significantly reduces reconstruction errors, leading to high-fidelity motion tokenization.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <div class="publication-video">
+            <video id="replay-video"
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="100%">
+            <source src="./static/video/ablation/reconstruction.mp4#t=0.01"
+                    type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Generation</h3>
+        <div class="content has-text-justified">
+          <p>
+            Utilizing the pre-trained RVQ model, we conduct a visual comparison of generated motions by considering different combinations of tokens, specifically focusing on the base-layer tokens alone, base-layer tokens combined with the first 3 residual-layer tokens and the first 5 residual-layer tokens. The observation indicates that the absence of residual tokens may result in the failure to accurately perform subtle actions, as illustrated by the case of <span style="color:blue">stumbling</span> in this example.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <center><p><b> A man walks forward, <span style="color:blue">stumbles</span> to the right, and then regains his balance and keeps walking forward.</b></p></center>
+          <video id="replay-video"
+                poster="./static/video/ablation/generation.jpg" 
+                 controls
+                 muted
+                 preload
+                 playsinline
+                 width="100%">
+            <source src="./static/video/ablation/generation.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <!-- <video width="100%" height="100%" source="" src="./files/video/ablation/reconstruction.mp4" type="video/mp4" loop="true" controls muted></video> -->
+        <!--/ Re-rendering. -->
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <center><h2 class="title is-3">Comparisons</h2></center><br>
+    <div class="content has-text-justified">
+      <p>
+        We compare MoMask against three strong baseline approaches, spanning diffusion models (e.g., MDM, MLD), and autoregressive models (e.g., T2M-GPT). In contrast to these existing works, MoMask excels in capturing nuanced language concepts, resulting in the generation of more realistic motions. <br>
+      </p>
+      <div class="content has-text-centered">
+        <video id="replay-video"
+               controls
+               muted
+               preload
+               playsinline
+               width="100%">
+          <source src="./static/video/comparison.mp4#t=0.01"
+                  type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+
+<section class="section is-light">
+  <div class="container is-max-desktop">
+    <center><h2 class="title is-3">Related Motion Generation Works &#128640&#128640</h2></center><br>
+    <div class="content has-text-justified">
+    <a href="https://ericguo5513.github.io/text-to-motion/"><b>Text2Motion</b></a>: Diverse text-driven motion generation using temporal variational autoencoder.<br>   
+    <a href="https://ericguo5513.github.io/TM2T/"><b>TM2T</b></a>: Learning text2motion and motion2text reciprocally through discrete token and language model.<br> 
+    <a href="https://garfield-kh.github.io/TM2D/"><b>TM2D</b></a>: Learning dance generation with textual instruction.<br>
+    <a href="https://ericguo5513.github.io/action-to-motion/"><b>Action2Motion</b></a>: Diverse action-conditioned motion generation.<br>
+    <a href="https://nhathoang2002.github.io/MotionMix-page/"><b>MotionMix</b></a>: Semi-supervised human motion generation from multi-modalities.<br>
+    </div>
+  </div>
+  
+</section>
+
+
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{guo2023momask,
+      title={MoMask: Generative Masked Modeling of 3D Human Motions}, 
+      author={Chuan Guo and Yuxuan Mu and Muhammad Gohar Javed and Sen Wang and Li Cheng},
+      year={2023},
+      eprint={2312.00063},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+        <p><sup><b>*</b></sup> These authors contributed to this work equally.</p>
+        <p>
+          This website is licensed under a <a rel="license"
+          href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+      <p>
+        Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want to reuse their <a
+        href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+      </p>
+    </div>
+  </div>
+</div>
+</div>
+</footer>
+
+<script>
+      var videoContainer = document.getElementById('video-container');
+      var video = document.getElementById('video');
+
+      var videoOffset = videoContainer.offsetTop;
+
+      window.addEventListener('scroll', function() {
+        var scrollPosition = window.scrollY || window.pageYOffset;
+
+        if (scrollPosition >= videoOffset) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+    </script>
+
+</body>
+</html>
