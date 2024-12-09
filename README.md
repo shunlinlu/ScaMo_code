@@ -35,11 +35,11 @@ The code was tested on Python 3.8 and PyTorch 2.0.0.
 ### 2.2. Dependencies
 
 ```bash
-bash dataset/prepare/download_model.sh
+bash prepare/download_model.sh
 ```
 Download google flan-t5-xl model from huggingface.
 ```bash
-bash dataset/prepare/download_t5.sh
+bash prepare/download_t5.sh
 ```
 
 
