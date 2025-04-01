@@ -110,10 +110,10 @@ class CausalResConv1DBlock(nn.Module):
             self.activation1 = nn.GELU()
             self.activation2 = nn.GELU()
 
-        # 计算左侧填充大小，kernel_size=3
+        # 
         self.left_padding = (3 - 1) * dilation
 
-        # 调整卷积层，设置 padding=0
+        # 
         self.conv1 = nn.Conv1d(n_in, n_state, kernel_size=3, stride=1, padding=0, dilation=dilation)
         self.conv2 = nn.Conv1d(n_state, n_in, kernel_size=1, stride=1, padding=0)
 
@@ -126,7 +126,7 @@ class CausalResConv1DBlock(nn.Module):
             x = self.norm1(x)
             x = self.activation1(x)
 
-        # 手动对输入进行左侧填充，实现因果卷积
+        # 
         x = nn.functional.pad(x, (self.left_padding, 0))
 
         x = self.conv1(x)
@@ -139,7 +139,7 @@ class CausalResConv1DBlock(nn.Module):
             x = self.activation2(x)
 
         x = self.conv2(x)
-        x = x + x_orig  # 残差连接
+        x = x + x_orig  #
         return x
 
 class CausalResnet1D(nn.Module):
